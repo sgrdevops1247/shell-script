@@ -3,8 +3,13 @@
 USERID=$(id -u)
 
 VALIDATE(){
-    echo "Exit status: $1"
-    echo "hat are you doing: $2"
+   if[ $1 -ne 0 ]
+   then
+     echo "$2...FAILURE"
+     exit 1
+   else
+     echo "$2...SUCESS"
+   fi
 
 }
 
@@ -17,23 +22,8 @@ else
 fi
 
 dnf install mysql -y
-
-if [ $? -ne 0 ]
-then 
-   echo "Installation of mysql...FAILURE"
-   exit 1
-else 
-   echo "Installation of mysql...SUCESS"
-fi
+VALIDATE $? "Installing MySQL"
 
 dnf install git -y
+VALIDATE $? "Installing Git"
 
-if [ $? -ne 0 ]
-then 
-   echo "Installation of git...FAILURE"
-   exit 1
-else 
-   echo "Installation of git...SUCESS"
-fi
-
-echo "is script proceeding"
